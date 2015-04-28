@@ -60,20 +60,36 @@ Factory = {
 		//创建一个动作节点
 		createActionState : function(data){
 			var actionState = null;
-			if(Util.checkNotNull(data, "data") && Util.checkIsString(data.name, "name")
-				 && Util.checkIsNum(data.state, "state")){
-				actionState = new ActionState();
-				actionState.init(data);
-			}else{
+			if(!Util.checkNotNull(data, true) || !Util.checkIsString(data.name, true) || Util.checkIsNum(data.state, true)){
 				cc.log("createActionState error, lack of necessary data!");
 				return null;
 			}
-			
-			if(Util.checkIsString(data.action, "action:") && Container.getAction(data.action)){
-				actionState.frames = Container.getAction(data.action).frames;
+			actionState = new ActionState();
+			actionState.init(data);
+			if(Util.checkIsString(data.action, "action:")){
+				var oldAct = Container.getAction(data.action);
+				if(oldAct){
+					actionState.frames = Container.getAction(data.action).frames;
+				}else{
+					cc.log("createActionState error, action:[" + data.action + "] not found!");
+					return null;
+				}
 			}else{
-				cc.log("createActionState error, action:[" + data.action + "] not found!");
-				return null;
+				if(Util.checkArrayNull(data.frames, true)){
+					cc.log("createActionState error, frames is null~!");
+					return null;
+				}
+				var list = [];
+				for(var i in data.frames){
+					var frame = cc.spriteFrameCache.getSpriteFrame(data.frames[i]);
+					if(frame){
+						list.push(frame);
+					}else{
+						cc.log("action:" + data.name + " frame:" + data.frames[i] + " not found");
+						return null;
+					}
+				}
+				actionState.frames = list;
 			}
 
 			if(data.repeat != undefined && data.repeat != 0){

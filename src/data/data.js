@@ -2,55 +2,32 @@
  *  entity
  */
 
-data_standFrame1 = {
-		source : "stand_0",
-		position : [0,0]
-		//vec : [2,0],
-};
-data_standFrame2 = {
-		source : "stand_1",
-		position : [0,0]
-		//vec : [2,0],
-};
-data_standFrame3 = {
-		source : "stand_2",
-		position : [0,0]
-		//vec : [2,0],
-};
-
-data_attackFrame1 = {
-		source : "attack_1",
-		position : [0,0]
-		//vec : [2,0],
-};
-data_attackFrame2 = {
-		source : "attack_2",
-		position : [0,0]
-		//vec : [2,0],
-};
-
-data_walkFrame1  ={
-		source : "walk_0",
-		position : [0,0]
-};
-data_walkFrame2  ={
-		source : "walk_1",
-		position : [0,0]
-};
-data_walkFrame3  ={
-		source : "walk_2",
-		position : [0,0]
-};
-data_walkFrame4  ={
-		source : "walk_3",
-		position : [0,0]
-};
-
-
 data_standAction = {
 		name : "standAction",
 		frames : ["deep_stand_0.png","deep_stand_1.png","deep_stand_2.png","deep_stand_3.png"],
 		type : 0
+};
+
+data_walkAction = {
+		name : "walkAction",
+		frames : ["deep_run_0.png","deep_run_1.png","deep_run_2.png","deep_run_1.png"],
+		type : 1
+};
+
+data_hurtAction = {
+		name : "hurtAction",
+		frames : ["deep_hurt_0.png","deep_hurt_1.png","deep_hurt_2.png","deep_hurt_3.png","deep_hurt_4.png","deep_hurt_5.png","deep_hurt_4.png","deep_hurt_4.png"],
+		type : 0
+};
+
+data_standState = {
+		name : "standState",
+		state : 0,
+		key : 0,
+		action : "standAction",
+		repeat : -1
+		// 如果要在stand一段时间后播放另一段action，加个funcNode就行了
+		//		[data_standAction,funcNode,data_standAction2]
 };
 
 
@@ -71,7 +48,7 @@ normal_att_state2 = {
 		type : 1,
 		name : "normal_attack2",
 		key : 1,
-		frames : ["deep_att_1.png","deep_att_1.png","deep_att_2.png"],
+		frames : ["deep_att_3.png","deep_att_4.png","deep_att_5.png"],
 		keyFrame : 2,
 		rect : [10,10,50,50],
 		hit : {
@@ -84,7 +61,7 @@ normal_att_state3 = {
 		type : 1,
 		name : "normal_attack3",
 		key : 1,
-		frames : ["deep_att_1.png","deep_att_2.png","deep_att_1.png","deep_att_2.png"],
+		frames : ["deep_att_4.png","deep_att_5.png","deep_att_6.png","deep_att_7.png"],
 		keyFrame : 2,
 		rect : [10,10,50,50],
 		hit : {
@@ -128,27 +105,50 @@ skill_group = {
 		fireType : 1,		//施放
 }
 
-data_walkAction = {
-		name : "walkAction",
-		frames : ["deep_run_0.png","deep_run_1.png","deep_run_2.png","deep_run_1.png"],
-		type : 1
-};
+wind_cut1 = {
+		name : "wind-cut1",
+		frames : ["deep_sk_6.png","deep_sk_7.png","deep_sk_8.png","deep_sk_9.png"],
+}
 
-data_hurtAction = {
-		name : "hurtAction",
-		frames : ["deep_hurt_0.png","deep_hurt_1.png","deep_hurt_2.png","deep_hurt_3.png","deep_hurt_4.png","deep_hurt_5.png","deep_hurt_4.png","deep_hurt_4.png"],
-		type : 0
-};
+wind_cut1_1 = {
+		name : "wind-cut1_1",
+		frames : ["deep_sk_6.png","deep_sk_7.png","deep_sk_8.png","deep_sk_9.png"],
+}
 
-data_standState = {
-		name : "standState",
-		state : 0,
-		key : 0,
-		action : "standAction",
-		repeat : -1
-		// 如果要在stand一段时间后播放另一段action，加个funcNode就行了
-		//		[data_standAction,funcNode,data_standAction2]
-};
+wind_cut1_2 = {
+		name : "wind-cut1_2",
+		frames : ["deep_sk_6.png","deep_sk_7.png","deep_sk_8.png","deep_sk_9.png"],
+}
+
+wind_cut1_1_1 = {
+		name : "wind-cut1_1_1",
+		frames : ["deep_sk_6.png","deep_sk_7.png","deep_sk_8.png","deep_sk_9.png"],
+}
+
+wind_cut2 = {
+		name : "wind-cut2",
+		frames : ["deep_sk_6.png","deep_sk_7.png","deep_sk_8.png","deep_sk_9.png"],
+}
+
+act_tree = {
+		actionNodes : [{
+			name : "wind_cut1",
+			next : [{
+				name : "wind_cut1_1",
+				next[{
+					name : "wind_cut1_1_1"
+				},{
+					name : "wind_cut2"
+				}]
+			},
+			{
+				name : "wind_cut1_2",
+				next[{
+					name : "wind_cut2"
+				}]
+			}]
+		}]
+}
 
 data_AttackState = {
 		name : "attackState",
